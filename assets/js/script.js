@@ -9,7 +9,6 @@ var option2El=document.querySelector("#option2");
 var option3El=document.querySelector("#option3");
 var option4El=document.querySelector("#option4");
 var h1El=document.querySelector("#result");
-
 var h3El = document.createElement("h3");
 var divEl = document.createElement("div");
 var div1El = document.createElement("div");
@@ -121,10 +120,10 @@ function setTimerText() {
   
 
 function setResults(array){
-    var getResults= localStorage.getItem("results");
-    if(getResults === null) getResults = "";
-   
-     localStorage.setItem("results",getResults +JSON.stringify(array));
+    var getResults= JSON.parse(localStorage.getItem("results"));
+    if(getResults === null) getResults = [];
+    var allResults = getResults.concat(array);
+     localStorage.setItem("results",JSON.stringify(allResults));
     
     
 };
@@ -133,12 +132,22 @@ function setResults(array){
 
 
 buttonEl.addEventListener("click", function () {
-    var score =
-    {
-        initials: inputEl.value,
-        score: timer
+
+    var inputName=inputEl.value;
+
+    if (inputName === "" || inputName === null) {
+        alert("Invalid Input!");
+      }
+    else{
+        var score =
+        {
+            initials: inputName,
+            score: timer
+        }
+        setResults(score);
+        inputEl.value="";
     }
-    setResults(score);
+    
 });
 
  
