@@ -17,19 +17,37 @@ var inputEl = document.createElement("INPUT");
 var buttonEl = document.createElement("INPUT");
 var resultEl = document.createElement("h1");
 
+function endGame(){
+    questionEl.textContent="GAME OVER!";
+    h1El.setAttribute("style","display:none");
+    h3El.textContent = "Your final score is "+timer;
+    cardcontentsEl.appendChild(h3El);
+    labelEl.textContent="Enter Initials:";
+    cardcontentsEl.appendChild(divEl);
+    cardcontentsEl.appendChild(div1El);
+    divEl.appendChild(labelEl);
+    divEl.appendChild(inputEl);
+    divEl.appendChild(buttonEl);
+    div1El.appendChild(resultEl);
+    option1El.setAttribute("style","display:none");
+    option2El.setAttribute("style","display:none");
+    option3El.setAttribute("style","display:none");
+    option4El.setAttribute("style","display:none");
+    h3El.setAttribute("style", "text-align: left;font-size: 25px;margin: 20px 70px;");
+    divEl.setAttribute("style", "text-align: left;font-size: 25px;margin: 20px 70px;");
+    inputEl.setAttribute("style", "margin-left:10px;text-align: left;padding: 12px 20px;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;");
+    buttonEl.setAttribute("type", "submit");
+    buttonEl.setAttribute("style","margin-left:10px;padding:5px;cursor: pointer;font-size: 24px;background-color: #a02462;color: white;border-radius: 12px;");
+    resultEl.setAttribute("style", "text-align: left;font-size: 25px;margin: 20px 70px;");
+}
+
 var timeInterval = window.setInterval(function(){ 
     if (timer > 0){
         timer--; 
         setTimerText();
     }
     else if (timer === 0){
-    questionEl.textContent="GAME OVER!";
-    option1El.setAttribute("style","display:none");
-    option2El.setAttribute("style","display:none");
-    option3El.setAttribute("style","display:none");
-    option4El.setAttribute("style","display:none");
-    resultEl.setAttribute("style","display:none");
-    h1El.setAttribute("style","display:none");
+    endGame();
     }
 }, 1000);
 
@@ -37,6 +55,7 @@ function setTimerText() {
     timerEl.textContent = timer;
   }
 
+  
   var buttonHandler = function(event){
     var targetEl = event.target;
     var optionSelected = targetEl.textContent;
@@ -93,26 +112,7 @@ function setTimerText() {
     else if(optionSelected != "4. console.log"){resultEl.textContent="Wrong!"; timer -= 10;};
     setTimerText();
     clearInterval(timeInterval);
-    questionEl.textContent="All done!"; 
-    h3El.textContent = "Your final score is "+timer;
-    cardcontentsEl.appendChild(h3El);
-    labelEl.textContent="Enter Initials:";
-    cardcontentsEl.appendChild(divEl);
-    cardcontentsEl.appendChild(div1El);
-    divEl.appendChild(labelEl);
-    divEl.appendChild(inputEl);
-    divEl.appendChild(buttonEl);
-    div1El.appendChild(resultEl);
-    option1El.setAttribute("style","display:none");
-    option2El.setAttribute("style","display:none");
-    option3El.setAttribute("style","display:none");
-    option4El.setAttribute("style","display:none");
-    h3El.setAttribute("style", "text-align: left;font-size: 25px;margin: 20px 70px;");
-    divEl.setAttribute("style", "text-align: left;font-size: 25px;margin: 20px 70px;");
-    inputEl.setAttribute("style", "margin-left:10px;text-align: left;padding: 12px 20px;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;");
-    buttonEl.setAttribute("type", "submit");
-    buttonEl.setAttribute("style","margin-left:10px;padding:5px;cursor: pointer;font-size: 24px;background-color: #a02462;color: white;border-radius: 12px;");
-    resultEl.setAttribute("style", "text-align: left;font-size: 25px;margin: 20px 70px;");
+    endGame();
    }
   
   };
@@ -146,10 +146,11 @@ buttonEl.addEventListener("click", function () {
         }
         setResults(score);
         inputEl.value="";
+        location.href="./high-scores.html";
     }
     
 });
 
  
   pageContentEl.addEventListener("click", buttonHandler);
-  
+  setTimerText();
