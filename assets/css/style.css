@@ -34,7 +34,7 @@ body {
     margin: 20px;
   }
 
-  #startquiz {
+  .myBtn {
     padding: 10px;
     margin: 24px;
     cursor: pointer;

@@ -9,6 +9,7 @@ var option2El=document.querySelector("#option2");
 var option3El=document.querySelector("#option3");
 var option4El=document.querySelector("#option4");
 var h1El=document.querySelector("#result");
+
 var h3El = document.createElement("h3");
 var divEl = document.createElement("div");
 var div1El = document.createElement("div");
@@ -21,6 +22,15 @@ var timeInterval = window.setInterval(function(){
     if (timer > 0){
         timer--; 
         setTimerText();
+    }
+    else if (timer === 0){
+    questionEl.textContent="GAME OVER!";
+    option1El.setAttribute("style","display:none");
+    option2El.setAttribute("style","display:none");
+    option3El.setAttribute("style","display:none");
+    option4El.setAttribute("style","display:none");
+    resultEl.setAttribute("style","display:none");
+    h1El.setAttribute("style","display:none");
     }
 }, 1000);
 
@@ -39,7 +49,7 @@ function setTimerText() {
     option3El.textContent="3. quotes";
     option4El.textContent="4. parenthesis";
     if(optionSelected === "3. alerts"){h1El.textContent="Correct!";}
-    else if(optionSelected != "3. alerts"){h1El.textContent="Wrong!";};
+    else if(optionSelected != "3. alerts"){h1El.textContent="Wrong!"; timer -= 10;};
     count++;
     }
    
@@ -50,7 +60,7 @@ function setTimerText() {
     option3El.textContent="3. parenthesis";
     option4El.textContent="4. square brackets";
     if(optionSelected === "3. quotes"){h1El.textContent="Correct!";}
-    else if(optionSelected != "3. quotes"){h1El.textContent="Wrong!";};
+    else if(optionSelected != "3. quotes"){h1El.textContent="Wrong!"; timer -= 10;};
     count++;
    }
 
@@ -61,7 +71,7 @@ function setTimerText() {
     option3El.textContent="3. booleans";
     option4El.textContent="4. all of the above";
     if(optionSelected === "3. parenthesis"){h1El.textContent="Correct!";}
-    else if(optionSelected != "3. parenthesis"){h1El.textContent="Wrong!";};
+    else if(optionSelected != "3. parenthesis"){h1El.textContent="Wrong!"; timer -= 10;};
     count++;
     answer="4. all of the above";
    }
@@ -74,16 +84,17 @@ function setTimerText() {
     option3El.textContent="3. for loops";
     option4El.textContent="4. console.log";
     if(optionSelected === "4. all of the above"){h1El.textContent="Correct!";}
-    else if(optionSelected != "4. all of the above"){h1El.textContent="Wrong!";};
+    else if(optionSelected != "4. all of the above"){h1El.textContent="Wrong!"; timer -= 10;};
     count++;
     answer="4. console.log";
    }
    else if(targetEl.matches(".options") && count === 4){
     h1El.textContent="";
     if(optionSelected === "4. console.log"){resultEl.textContent="Correct!";}
-    else if(optionSelected != "4. console.log"){resultEl.textContent="Wrong!";};
+    else if(optionSelected != "4. console.log"){resultEl.textContent="Wrong!"; timer -= 10;};
+    setTimerText();
     clearInterval(timeInterval);
-    questionEl.textContent="All done!";
+    questionEl.textContent="All done!"; 
     h3El.textContent = "Your final score is "+timer;
     cardcontentsEl.appendChild(h3El);
     labelEl.textContent="Enter Initials:";
@@ -104,7 +115,32 @@ function setTimerText() {
     buttonEl.setAttribute("style","margin-left:10px;padding:5px;cursor: pointer;font-size: 24px;background-color: #a02462;color: white;border-radius: 12px;");
     resultEl.setAttribute("style", "text-align: left;font-size: 25px;margin: 20px 70px;");
    }
+  
   };
 
+  
 
+function setResults(array){
+    var getResults= localStorage.getItem("results");
+    if(getResults === null) getResults = "";
+   
+     localStorage.setItem("results",getResults +JSON.stringify(array));
+    
+    
+};
+
+
+
+
+buttonEl.addEventListener("click", function () {
+    var score =
+    {
+        initials: inputEl.value,
+        score: timer
+    }
+    setResults(score);
+});
+
+ 
   pageContentEl.addEventListener("click", buttonHandler);
+  
